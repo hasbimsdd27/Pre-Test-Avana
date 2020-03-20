@@ -1,0 +1,24 @@
+.mainContainer {
+  background-color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  color: white;
+  transition: 0.5s;
+}
+
+.sideBar {
+  display: flex;
+  flex: 1;
+  padding: 10px;
+  background-color: yellow;
+  transition: 0.5s;
+}
+
+.appContent {
+  display: flex;
+  flex: 7;
+  padding: 10px;
+  background-color: red;
+  transition: 0.5s;
+}
