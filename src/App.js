@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import "./App.css";
 import "font-awesome/css/font-awesome.min.css";
 import { getSidebar } from "./_actions/setting";
-
+import Accordion from "./components/Accordion";
 const App = props => {
   useEffect(() => {
     props.getSidebar();
@@ -36,59 +36,34 @@ const App = props => {
             <div className="menuArea">
               {props.SidebarMenu.data.map((item, index) =>
                 item.isShowed ? (
-                  <>
-                    {item.isAllowed ? (
-                      <div key={index} className="sideBarParent">
-                        {item.id}
-                      </div>
+                  item.isAllowed ? (
+                    item.childs ? (
+                      <Accordion title={item.id} key={index}>
+                        {item.childs
+                          ? item.childs.map((item, index) =>
+                              item.isShowed ? (
+                                item.isAllowed ? (
+                                  <div className="accordion-text" key={index}>
+                                    {item.id}
+                                  </div>
+                                ) : (
+                                  <div
+                                    className="accordion-text disabled"
+                                    key={index}
+                                  >
+                                    {item.id}
+                                  </div>
+                                )
+                              ) : null
+                            )
+                          : null}
+                      </Accordion>
                     ) : (
-                      <div
-                        key={index}
-                        className="sideBarParent"
-                        style={{ color: "#444" }}
-                      >
-                        {item.id}
-                      </div>
-                    )}
-                    {item.childs
-                      ? item.childs.map((item, index) =>
-                          item.isShowed ? (
-                            <div style={setChild}>
-                              {item.isAllowed ? (
-                                <div key={index} className="sideBarChild">
-                                  {item.id}
-                                </div>
-                              ) : (
-                                <div
-                                  key={index}
-                                  className="sideBarChild"
-                                  style={{ color: "#444" }}
-                                >
-                                  {item.id}
-                                </div>
-                              )}
-                              {item.childs ? (
-                                item.isShowed ? (
-                                  item.isAllowed ? (
-                                    <div key={index} className="sideBarChild2">
-                                      {item.id}
-                                    </div>
-                                  ) : (
-                                    <div
-                                      key={index}
-                                      className="sideBarChild2"
-                                      style={{ color: "#444" }}
-                                    >
-                                      {item.id}
-                                    </div>
-                                  )
-                                ) : null
-                              ) : null}
-                            </div>
-                          ) : null
-                        )
-                      : null}
-                  </>
+                      <div className="noChild">{item.id}</div>
+                    )
+                  ) : (
+                    <div className="disabled">{item.id}</div>
+                  )
                 ) : null
               )}
             </div>
